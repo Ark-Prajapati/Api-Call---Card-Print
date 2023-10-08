@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Calls</title>
+    <style>
+        button{
+            background-color: #212121;
+            color: #fff;
+            border-radius: 50px;
+        }
+    </style>
+</head>
+<body>
+    <button>Click here!!</button>
+</body>
+<script>
+
+    const button = document.querySelector('button')
+
+    function outsideText(a){
+        button.addEventListener('click', () => {
+
+            //creating div aka the card
+            const div = document.createElement('div')
+            div.style.border = "1px solid"
+            div.style.padding = "20px"
+            div.style.backgroundColor = "#212121"
+            div.style.color = "#fff"
+            div.style.width = "200px"
+
+            //no. of followers
+            const p = document.createElement('p')
+            const followers = document.createTextNode(`No. of followers: ${a}`)
+            const firstPart = p.appendChild(followers)
+            div.appendChild(firstPart)
+
+            //generating line break
+            const lineBreak = document.createElement('br')
+            div.appendChild(lineBreak)
+
+            //the image
+            const image = document.createElement('img')
+            image.src = 'https://avatars.githubusercontent.com/u/11613311?v=4'
+            image.style.width = "200px"
+            image.style.marginTop = "20px"
+            div.appendChild(image)
+        
+            document.body.appendChild(div)
+            
+        })
+    }
+
+    const api = 'https://api.github.com/users/hiteshchoudhary'
+    const apiCall = new XMLHttpRequest
+    apiCall.open('GET', api)
+    apiCall.onreadystatechange = function(){
+        console.log(apiCall.readyState);
+        if(apiCall.readyState === 4){
+            const data = JSON.parse(this.responseText)
+            const text = data.followers
+            outsideText(text)
+        }
+    }
+
+    apiCall.send()
+
+    
+
+</script>
+</html>
